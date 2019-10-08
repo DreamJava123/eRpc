@@ -20,4 +20,13 @@ public enum SerializerAlogrithm {
     this.code = code;
     this.magicNum = magicNum;
   }
+
+  public static SerializerAlogrithm coverMagicNum(Byte b) {
+    for (SerializerAlogrithm value : SerializerAlogrithm.values()) {
+      if (b.equals(value.code)) {
+        return value;
+      }
+    }
+    return null;
+  }
 }

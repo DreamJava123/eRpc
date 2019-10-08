@@ -1,6 +1,7 @@
 package serialize;
 
-import util.JsonSerializationUtil;
+import enums.SerializerAlogrithm;
+import java.util.Map;
 import util.ProtoSerializationUtil;
 
 /**
@@ -12,14 +13,17 @@ public class serializeTest {
   public static void main(String[] args) {
     Person person = new Person(0, "dd", 45);
 
-    byte[] serialize = ProtoSerializationUtil.INSTANCE.serialize(person);
-    Person person1 = ProtoSerializationUtil.INSTANCE.deserialize(serialize, Person.class);
+    byte[] serialize = ProtoSerializationUtil.getInstance().serialize(person);
+    Person person1 = ProtoSerializationUtil.getInstance().deserialize(serialize, Person.class);
     System.out.println(serialize);
     System.out.println(person1);
 
-    byte[] serialize1 = JsonSerializationUtil.INSTANCE.serialize(person);
-    Person deserialize = JsonSerializationUtil.INSTANCE.deserialize(serialize, Person.class);
-    System.out.println(serialize1);
-    System.out.println(deserialize);
+    son son = new son("1", 1);
+    son1 son1 = new son1("2", 2);
+
+    Map test = person.test();
+    System.out.println(test);
+    System.out.println(SerializerAlogrithm.JSON.getCode());
+
   }
 }

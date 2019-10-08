@@ -8,9 +8,16 @@ import enums.SerializerAlogrithm;
  * Created by TOM
  * On 2019/9/29 23:54
  */
-public enum JsonSerializationUtil implements Serialization {
-  INSTANCE;
+public class JsonSerializationUtil implements Serialization {
 
+  private static class JsonSerializationHolder {
+
+    private final static JsonSerializationUtil JSON_SERIALIZATION_UTIL = new JsonSerializationUtil();
+  }
+
+  public static JsonSerializationUtil getInstance() {
+    return JsonSerializationHolder.JSON_SERIALIZATION_UTIL;
+  }
 
   @Override
   public byte getSerializerAlogrithm() {

@@ -9,34 +9,47 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
+import protocol.RpcCodec;
 
 /**
  * 对象序列化反序列化工具类
  * Created by TOM
  * On 2019/9/29 22:23
  */
-public enum ProtoSerializationUtil implements Serialization {
-  INSTANCE;
+public class ProtoSerializationUtil extends RpcCodec implements Serialization {
+
+  private static class protoHolder {
+
+    private static final ProtoSerializationUtil PROTO_SERIALIZATION_UTIL = new ProtoSerializationUtil();
+  }
+
   private static Map<Class<?>, Schema<?>> cachedSchema = new ConcurrentHashMap<>();
 
   private static final Objenesis OBJENESIS = new ObjenesisStd(true);
-
-  @SuppressWarnings("unchecked")
-  private static <T> Schema<T> getSchema(Class<T> cls) {
-    return (Schema<T>) cachedSchema.computeIfAbsent(cls, RuntimeSchema::createFrom);
-  }
 
   @Override
   public byte getSerializerAlogrithm() {
     return SerializerAlogrithm.PROTOSTUFF.getCode();
   }
 
+  public ProtoSerializationUtil(Integer magicNum, Class clazz) {
+    super(magicNum, clazz);
+  }
+
+  private ProtoSerializationUtil() {
+  }
+
+  public static ProtoSerializationUtil getInstance() {
+    return protoHolder.PROTO_SERIALIZATION_UTIL;
+  }
+
+  @SuppressWarnings("unchecked")
+  private static <T> Schema<T> getSchema(Class<T> cls) {
+    return (Schema<T>) cachedSchema.computeIfAbsent(cls, RuntimeSchema::createFrom);
+  }
+
   /**
    * 序列化方法
-   *
-   * @param t
-   * @param <T>
-   * @return
    */
   @SuppressWarnings("unchecked")
   public <T> byte[] serialize(T t) {
