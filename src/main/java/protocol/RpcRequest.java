@@ -2,6 +2,7 @@ package protocol;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import protocol.command.Command;
 
 /**
@@ -11,9 +12,11 @@ import protocol.command.Command;
  */
 @Getter
 @Setter
+@ToString
 public class RpcRequest extends BasePacket {
 
-  private String className;
+  private Long requestId;
+  private String interfaceName;
   private String methodName;
   //参数类型
   private Class<?>[] parameterTypes;

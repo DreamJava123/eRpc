@@ -1,6 +1,9 @@
 package enums;
 
 import lombok.Getter;
+import util.JsonSerializationUtil;
+import util.ProtoSerializationUtil;
+import util.Serialization;
 
 /**
  * 序列化算法枚举类
@@ -9,16 +12,19 @@ import lombok.Getter;
  */
 @Getter
 public enum SerializerAlogrithm {
-  PROTOSTUFF((byte) 0, 0x001),
-  JSON((byte) 1, 0x002);
+  PROTOSTUFF((byte) 0, 0x001, ProtoSerializationUtil.getInstance()),
+  JSON((byte) 1, 0x002, JsonSerializationUtil.getInstance());
 
   private Byte code;
 
   private Integer magicNum;
 
-  SerializerAlogrithm(Byte code, Integer magicNum) {
+  private Serialization serialization;
+
+  SerializerAlogrithm(Byte code, Integer magicNum, Serialization serialization) {
     this.code = code;
     this.magicNum = magicNum;
+    this.serialization = serialization;
   }
 
   public static SerializerAlogrithm coverMagicNum(Byte b) {

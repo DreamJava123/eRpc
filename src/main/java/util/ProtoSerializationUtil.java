@@ -9,14 +9,13 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
-import protocol.RpcCodec;
 
 /**
  * 对象序列化反序列化工具类
  * Created by TOM
  * On 2019/9/29 22:23
  */
-public class ProtoSerializationUtil extends RpcCodec implements Serialization {
+public class ProtoSerializationUtil implements Serialization {
 
   private static class protoHolder {
 
@@ -30,13 +29,6 @@ public class ProtoSerializationUtil extends RpcCodec implements Serialization {
   @Override
   public byte getSerializerAlogrithm() {
     return SerializerAlogrithm.PROTOSTUFF.getCode();
-  }
-
-  public ProtoSerializationUtil(Integer magicNum, Class clazz) {
-    super(magicNum, clazz);
-  }
-
-  private ProtoSerializationUtil() {
   }
 
   public static ProtoSerializationUtil getInstance() {
